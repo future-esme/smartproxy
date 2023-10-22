@@ -1,0 +1,32 @@
+spring:
+  rabbitmq:
+    host: localhost
+    username: rmuser
+    password: rmpassword
+  application:
+    name: eureka-client
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: movies
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core:
+              MongoTemplate: DEBUG
+
+server:
+  port: 9000
+
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+moviesapi:
+  sending-queue: 9001q
+  receiving-queue: 9000q
