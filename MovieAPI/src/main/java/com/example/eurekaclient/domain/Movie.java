@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Document
 public class Movie extends MongoDocument {
@@ -64,6 +65,19 @@ public class Movie extends MongoDocument {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(name, movie.name) && Objects.equals(actors, movie.actors) && Objects.equals(budget, movie.budget) && Objects.equals(description, movie.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, actors, budget, description);
+    }
+
+    @Override
     public String toString() {
         return "Movie{" +
                 "name='" + name + '\'' +
@@ -72,7 +86,4 @@ public class Movie extends MongoDocument {
                 ", description='" + description + '\'' +
                 '}';
     }
-
-
-    
 }

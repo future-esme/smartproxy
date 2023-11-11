@@ -1,7 +1,18 @@
 version: '3.1'
 services:
+  nginx:
+    container_name: nginx-proxy
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    restart: unless-stopped
+    labels:
+      org.label-schema.group: "vendor"
   gateway-app:
-    image: 'danielmarandici/movies_gateway:tagname'
+    image: '2014003/moviesgateway:latest'
     ports:
       - "8088:8088"
     environment:
@@ -11,7 +22,7 @@ services:
     networks:
       - ms-network
   eurekaserver:
-    image: 'danielmarandici/eureka_server:tagname'
+    image: '2014003/eurekaserver:latest'
     environment:
       eureka.client.registerWithEureka: false
       eureka.client.fetchRegistry: false
@@ -48,7 +59,7 @@ services:
     networks:
       - ms-network
   eureka-client-1:
-    image: 'danielmarandici/movies_api:tagname'
+    image: '2014003/movieapi:latest'
     environment:
       spring.rabbitmq.host: rabbitmq
       spring.rabbitmq.username: rmuser
@@ -76,7 +87,7 @@ services:
     networks:
       - ms-network
   eureka-client-2:
-    image: 'danielmarandici/movies_api:tagname'
+    image: '2014003/movieapi:latest'
     environment:
       spring.rabbitmq.host: rabbitmq
       spring.rabbitmq.username: rmuser
